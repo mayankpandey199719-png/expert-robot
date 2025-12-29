@@ -1,103 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Answer Engine</title>
+  <meta charset="UTF-8">
+  <title>Secret Santa Test</title>
+
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f1220;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .box {
-      width: 320px;
-      background: #1b1f3b;
-      padding: 20px;
-      border-radius: 10px;
+      background: black;
+      color: white;
       text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
-    .progress {
-      width: 100%;
-      height: 8px;
-      background: #333;
-      border-radius: 5px;
-      overflow: hidden;
-      margin: 15px 0;
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+      padding-top: 40vh;
     }
-    .bar {
-      height: 100%;
-      width: 0%;
-      background: #4caf50;
-      transition: width 0.4s;
+
+    .screen.active {
+      display: block;
     }
+
     button {
-      background: #4caf50;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      color: #000;
+      padding: 15px 30px;
+      font-size: 16px;
       cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background: #43a047;
     }
   </style>
 </head>
-
 <body>
-  <div class="box">
-    <h2 id="title">AI Answer Engine</h2>
-    <p id="text">Click to analyze your question.</p>
 
-    <div class="progress">
-      <div class="bar" id="bar"></div>
-    </div>
-
-    <button id="btn" onclick="nextStep()">Start Analysis</button>
+  <!-- START -->
+  <div id="start" class="screen active">
+    <h1>🎬 Start Screen</h1>
+    <button onclick="showScene('scene1')">Start Movie ▶</button>
   </div>
 
-<script>
-  let step = 0;
-  const totalSteps = 12;
+  <!-- SCENE 1 -->
+  <div id="scene1" class="screen">
+    <h1>🎬 Scene 1</h1>
+    <button onclick="showScene('start')">⬅ Back</button>
+    <button onclick="showScene('scene2')">Next ➡</button>
+  </div>
 
-  const messages = [
-    "Analyzing probability space…",
-    "Consulting neural pathways…",
-    "Checking historical outcomes…",
-    "Simulating alternate realities…",
-    "Verifying confidence level…",
-    "Cross-checking logic models…",
-    "Reducing uncertainty…",
-    "Applying final constraints…"
-  ];
+  <!-- SCENE 2 -->
+  <div id="scene2" class="screen">
+    <h1>🎬 Scene 2</h1>
+    <button onclick="showScene('scene1')">⬅ Back</button>
+  </div>
 
-  function nextStep() {
-    step++;
+  <script>
+    console.log("INLINE SCRIPT LOADED");
 
-    const text = document.getElementById("text");
-    const bar = document.getElementById("bar");
-    const btn = document.getElementById("btn");
+    function showScene(id) {
+      console.log("Navigating to:", id);
 
-    if (step < totalSteps) {
-      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-      text.innerText = randomMsg;
+      document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+      });
 
-      bar.style.width = Math.floor((step / totalSteps) * 100) + "%";
+      const target = document.getElementById(id);
+      if (!target) {
+        alert("Scene not found: " + id);
+        return;
+      }
 
-      btn.innerText = step < totalSteps - 1 ? "Continue" : "Finalize";
-    } else {
-      document.getElementById("title").innerText = "Result";
-      text.innerText = "YES! LET'S DO IT! 🫡";
-      bar.style.width = "100%";
-      btn.style.display = "none";
+      target.classList.add('active');
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
